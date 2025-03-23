@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>TeknikAnaliz.NET</Title>
+    <Authors>Mehmet Emin KARADAĞ</Authors>
+    <Description>TeknikAnaliz.NET, yaygın olarak kullanılan teknik indikatörlerin (RSI, EMA, Bollinger Bantları vb.) TradingView'in Pine Script programlama dilindeki hesaplamalarına uygun şekilde C#'a uyarlanmış halini sunar.</Description>
+    <Copyright>Tüm hakları saklıdır.</Copyright>
+    <PackageProjectUrl>https://github.com/emin-karadag/TeknikAnaliz.NET</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/emin-karadag/TeknikAnaliz.NET</RepositoryUrl>
+    <PackageTags>teknik analiz, technical analysis, rsi, ema, sma, rma, bollinger band</PackageTags>
+    <PackageIcon>logo.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
