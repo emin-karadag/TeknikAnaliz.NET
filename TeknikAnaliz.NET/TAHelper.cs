@@ -63,5 +63,56 @@
         }
 
         #endregion
+
+        #region SMA (Simple Moving Average)
+
+        /// <summary>
+        /// Simple Moving Average (SMA) hesaplar.
+        /// TradingView'in ta.sma() fonksiyonu ile aynı sonuçları verir.
+        /// </summary>
+        /// <param name="source">Kaynak fiyat dizisi</param>
+        /// <param name="length">Periyot uzunluğu</param>
+        /// <returns>SMA değerlerini içeren dizi</returns>
+        public static double[] SMA(double[] source, int length)
+        {
+            if (source == null || source.Length == 0)
+                return [];
+
+            if (length <= 0)
+                throw new ArgumentException("Periyot uzunluğu pozitif bir sayı olmalıdır.", nameof(length));
+
+            double[] result = new double[source.Length];
+
+            // Kayan pencere yaklaşımı ile SMA hesapla
+            double sum = 0.0;
+            int count = 0;
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                // Yeni değeri ekle
+                if (!double.IsNaN(source[i]))
+                {
+                    sum += source[i];
+                    count++;
+                }
+
+                // Eğer length değerinden fazla değerimiz varsa eski değeri çıkar
+                if (i >= length && !double.IsNaN(source[i - length]))
+                {
+                    sum -= source[i - length];
+                    count--;
+                }
+
+                // Yeterli veri varsa SMA hesapla
+                if (i >= length - 1)
+                    result[i] = count > 0 ? sum / count : double.NaN;
+                else
+                    result[i] = double.NaN;
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }
