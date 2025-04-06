@@ -398,3 +398,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/TeknikAnaliz.NET.Console/TeknikAnaliz.NET.Console.csproj

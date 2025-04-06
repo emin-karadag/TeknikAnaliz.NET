@@ -1,4 +1,4 @@
-![TeknikAnaliz.Net](https://github.com/emin-karadag/TeknikAnaliz.Net/blob/main/Moralis.Net/Moralis-Logo.png)
+![TeknikAnaliz.Net](https://github.com/emin-karadag/TeknikAnaliz.NET/blob/main/TeknikAnaliz.NET/Images/banner-min.png)
 
 # TeknikAnaliz.NET
 
@@ -8,16 +8,16 @@ TeknikAnaliz.NET, finansal piyasalarda teknik analiz yapmak için tasarlanmış 
 
 ## Kurulum
 
-NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.0
+NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.1
 
 **NuGet PM**
 ```
-Install-Package TeknikAnaliz.NET -Version 1.0.0
+Install-Package TeknikAnaliz.NET -Version 1.0.1
 ```
 
 **dotnet cli**
 ```
-dotnet add package TeknikAnaliz.NET --version 1.0.0
+dotnet add package TeknikAnaliz.NET --version 1.0.1
 ```
 
 ### Neden TeknikAnaliz.NET?
@@ -32,7 +32,7 @@ dotnet add package TeknikAnaliz.NET --version 1.0.0
 | Özellik                 |    Durum     |  
 |------------------------|:--------------:|
 | EMA (Exponential Moving Average)            |      ✔         |
-| SMA (Simple Moving Average)    |                |
+| SMA (Simple Moving Average)    |               ✔ |  
 | RMA (Relative Moving Average)                    |                |
 | STDEV (Standard Deviation)    |                |
 | RSI (Relative Strength Index)      |                |
@@ -62,6 +62,16 @@ using TeknikAnaliz.NET;
 
 var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
 var result = TAHelper.EMA(closePrices, 9);
+```
+
+**2. SMA (Simple Moving Average):**
+SMA metodu, TradingView'in `ta.sma()` fonksiyonu ile aynı sonuçları verir.
+
+```csharp
+using TeknikAnaliz.NET;
+
+var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
+var result = TAHelper.SMA(closePrices, 9);
 ```
 
 ### Lisans 
