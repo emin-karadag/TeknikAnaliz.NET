@@ -180,5 +180,84 @@
         }
 
         #endregion
+
+        #region STDEV (Standard Deviation)
+
+        /// <summary>
+        /// Standart Sapma (Standard Deviation) hesaplar.
+        /// TradingView'in ta.stdev() fonksiyonu ile aynı sonuçları verir.
+        /// </summary>
+        /// <param name="source">Kaynak fiyat dizisi</param>
+        /// <param name="length">Periyot uzunluğu</param>
+        /// <param name="biased">Taraflı tahmin kullanılıp kullanılmayacağı. True: tüm popülasyonun taraflı tahmini, False: bir örneğin tarafsız tahmini</param>
+        /// <returns>Standart sapma değerlerini içeren dizi</returns>
+        public static double[] STDEV(double[] source, int length, bool biased = true)
+        {
+            if (source == null || source.Length == 0)
+                return [];
+
+            if (length <= 0)
+                throw new ArgumentException("Periyot uzunluğu pozitif bir sayı olmalıdır.", nameof(length));
+
+            // Önce SMA hesapla
+            double[] sma = SMA(source, length);
+            double[] result = new double[source.Length];
+
+            // Her bir indeks için standart sapma hesapla
+            for (int i = 0; i < source.Length; i++)
+            {
+                // Eğer yeterli veri yoksa veya SMA değeri NaN ise NaN döndür
+                if (i < length - 1 || double.IsNaN(sma[i]))
+                {
+                    result[i] = double.NaN;
+                    continue;
+                }
+
+                double sumOfSquareDeviations = 0.0;
+                int validCount = 0;
+
+                for (int j = 0; j < length; j++)
+                {
+                    int sourceIndex = i - j;
+                    if (sourceIndex >= 0 && !double.IsNaN(source[sourceIndex]))
+                    {
+                        double deviation = source[sourceIndex] - sma[i];
+                        // Çok küçük değerler için sıfır kabul et
+                        if (Math.Abs(deviation) <= 1e-10)
+                            deviation = 0;
+
+                        sumOfSquareDeviations += deviation * deviation;
+                        validCount++;
+                    }
+                }
+
+                // Eğer hiç geçerli değer yoksa NaN döndür
+                if (validCount == 0)
+                {
+                    result[i] = double.NaN;
+                }
+                else
+                {
+                    // biased parametresine göre hesapla
+                    // true: tüm popülasyonun taraflı tahmini (n)
+                    // false: bir örneğin tarafsız tahmini (n-1)
+                    double divisor = biased ? validCount : (validCount - 1);
+
+                    // n-1 = 0 olabilir, bu durumda NaN döndür
+                    if (divisor <= 0)
+                    {
+                        result[i] = double.NaN;
+                    }
+                    else
+                    {
+                        result[i] = Math.Sqrt(sumOfSquareDeviations / divisor);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }
