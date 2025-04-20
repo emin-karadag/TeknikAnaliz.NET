@@ -7,7 +7,7 @@ try
     var client = new BinanceRestClient();
     var klinesResult = await client.SpotApi.ExchangeData.GetKlinesAsync(
         symbol: "BTCUSDT",
-        interval: KlineInterval.FifteenMinutes,
+        interval: KlineInterval.OneDay,
         limit: 100);
 
     if (klinesResult.Success && (klinesResult.Data?.Any() ?? false))
@@ -17,10 +17,12 @@ try
         var emaResult = TAHelper.EMA(closePrices, 9);
         var smaResult = TAHelper.SMA(closePrices, 9);
         var rmaResult = TAHelper.RMA(closePrices, 15);
+        var stDevResult = TAHelper.STDEV(closePrices, 5);
 
         Console.WriteLine($"EMA => {emaResult.Last():F3} USDT");
         Console.WriteLine($"SMA => {smaResult.Last():F3} USDT");
         Console.WriteLine($"RMA => {rmaResult.Last():F3} USDT");
+        Console.WriteLine($"STDEV => {stDevResult.Last():F3} USDT");
     }
 }
 catch (Exception ex)

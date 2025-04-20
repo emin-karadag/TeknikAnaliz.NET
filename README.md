@@ -4,20 +4,20 @@
 
 **Finansal dünyayı C# ile daha da yakından analiz etmek için TeknikAnaliz.NET'i keşfedin!** 🚀
 
-TeknikAnaliz.NET, finansal piyasalarda teknik analiz yapmak için tasarlanmış güçlü ve kullanımı kolay bir C# kütüphanesidir. Bu kütüphane, yaygın olarak kullanılan teknik indikatörlerin (RSI, EMA, Bollinger Bantları vb.) TradingView'in Pine Script programlama dilindeki hesaplamalarına uygun şekilde C#'a uyarlanmış halini suna
+TeknikAnaliz.NET, finansal piyasalarda teknik analiz yapmak için tasarlanmış güçlü ve kullanımı kolay bir C# kütüphanesidir. Bu kütüphane, yaygın olarak kullanılan teknik indikatörlerin (RSI, EMA, Bollinger Bantları vb.) TradingView'in Pine Script programlama dilindeki hesaplamalarına uygun şekilde C#'a uyarlanmış halini sunar.
 
 ## Kurulum
 
-NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.2
+NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.3
 
 **NuGet PM**
 ```
-Install-Package TeknikAnaliz.NET -Version 1.0.2
+Install-Package TeknikAnaliz.NET -Version 1.0.3
 ```
 
 **dotnet cli**
 ```
-dotnet add package TeknikAnaliz.NET --version 1.0.2
+dotnet add package TeknikAnaliz.NET --version 1.0.3
 ```
 
 ### Neden TeknikAnaliz.NET?
@@ -34,7 +34,7 @@ dotnet add package TeknikAnaliz.NET --version 1.0.2
 | EMA (Exponential Moving Average)              |   ✔  |
 | SMA (Simple Moving Average)                   |   ✔  |  
 | RMA (Relative Moving Average)                 |   ✔  |
-| STDEV (Standard Deviation)                    |       |
+| STDEV (Standard Deviation)                    |   ✔  |
 | RSI (Relative Strength Index)                 |       |
 | BB (Bollinger Bands)                          |       | |
 
@@ -82,6 +82,16 @@ using TeknikAnaliz.NET;
 
 var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
 var result = TAHelper.RMA(closePrices, 15);
+```
+
+**4. STDEV (Standard Deviation):**
+RMA metodu, TradingView'in `ta.stdev()` fonksiyonu ile aynı sonuçları verir.
+
+```csharp
+using TeknikAnaliz.NET;
+
+var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
+var result = TAHelper.STDEV(closePrices, 5);
 ```
 
 ### Lisans 

@@ -13,8 +13,8 @@
     <RepositoryUrl>https://github.com/emin-karadag/TeknikAnaliz.NET</RepositoryUrl>
     <PackageTags>teknik analiz, technical analysis, rsi, ema, sma, rma, bollinger band</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
-    <PackageReleaseNotes>- RMA (Relative Moving Average) eklendi.</PackageReleaseNotes>
-    <Version>1.0.2</Version>
+    <PackageReleaseNotes>- STDEV (Standard Deviation) eklendi.</PackageReleaseNotes>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
