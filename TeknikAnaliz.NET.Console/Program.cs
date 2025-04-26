@@ -18,11 +18,13 @@ try
         var smaResult = TAHelper.SMA(closePrices, 9);
         var rmaResult = TAHelper.RMA(closePrices, 15);
         var stDevResult = TAHelper.STDEV(closePrices, 5);
+        var rsiResult = TAHelper.RSI(closePrices, 14);
 
         Console.WriteLine($"EMA => {emaResult.Last():F3} USDT");
         Console.WriteLine($"SMA => {smaResult.Last():F3} USDT");
         Console.WriteLine($"RMA => {rmaResult.Last():F3} USDT");
         Console.WriteLine($"STDEV => {stDevResult.Last():F3} USDT");
+        Console.WriteLine($"RSI => {rsiResult.Last():F3} USDT");
     }
 }
 catch (Exception ex)
