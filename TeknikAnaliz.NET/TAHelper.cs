@@ -259,5 +259,73 @@
         }
 
         #endregion
+
+        #region RSI (Relative Strength Index)
+
+        /// <summary>
+        /// Göreceli Güç Endeksi (Relative Strength Index - RSI) hesaplar.
+        /// TradingView'in ta.rsi() fonksiyonu ile aynı sonuçları verir.
+        /// </summary>
+        /// <param name="source">Kaynak fiyat dizisi</param>
+        /// <param name="length">Periyot uzunluğu</param>
+        /// <returns>RSI değerlerini içeren dizi</returns>
+        public static double[] RSI(double[] source, int length)
+        {
+            if (source == null || source.Length == 0)
+                return [];
+
+            if (length <= 0)
+                throw new ArgumentException("Periyot uzunluğu pozitif bir sayı olmalıdır.", nameof(length));
+
+            double[] result = new double[source.Length];
+
+            double[] upChanges = new double[source.Length];
+            double[] downChanges = new double[source.Length];
+
+            upChanges[0] = double.NaN;
+            downChanges[0] = double.NaN;
+            result[0] = double.NaN;
+
+            for (int i = 1; i < source.Length; i++)
+            {
+                if (double.IsNaN(source[i]) || double.IsNaN(source[i - 1]))
+                {
+                    upChanges[i] = double.NaN;
+                    downChanges[i] = double.NaN;
+                }
+                else
+                {
+                    upChanges[i] = Math.Max(source[i] - source[i - 1], 0);
+                    downChanges[i] = Math.Max(source[i - 1] - source[i], 0);
+                }
+            }
+
+            // RMA hesaplama
+            double[] upRMA = RMA(upChanges, length);
+            double[] downRMA = RMA(downChanges, length);
+
+            // RSI hesaplama
+            for (int i = 0; i < source.Length; i++)
+            {
+                if (double.IsNaN(upRMA[i]) || double.IsNaN(downRMA[i]))
+                {
+                    result[i] = double.NaN;
+                }
+                else if (Math.Abs(downRMA[i]) < 1e-10)
+                {
+                    // Sıfıra bölme durumunda RSI = 100
+                    result[i] = 100.0;
+                }
+                else
+                {
+                    double rs = upRMA[i] / downRMA[i];
+                    result[i] = 100.0 - (100.0 / (1.0 + rs));
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }
