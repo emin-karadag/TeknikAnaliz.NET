@@ -8,16 +8,16 @@ TeknikAnaliz.NET, finansal piyasalarda teknik analiz yapmak için tasarlanmış 
 
 ## Kurulum
 
-NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.4
+NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.5
 
 **NuGet PM**
 ```
-Install-Package TeknikAnaliz.NET -Version 1.0.4
+Install-Package TeknikAnaliz.NET -Version 1.0.5
 ```
 
 **dotnet cli**
 ```
-dotnet add package TeknikAnaliz.NET --version 1.0.4
+dotnet add package TeknikAnaliz.NET --version 1.0.5
 ```
 
 ### Neden TeknikAnaliz.NET?
@@ -36,7 +36,7 @@ dotnet add package TeknikAnaliz.NET --version 1.0.4
 | RMA (Relative Moving Average)                 |   ✔  |
 | STDEV (Standard Deviation)                    |   ✔  |
 | RSI (Relative Strength Index)                 |   ✔  |
-| BB (Bollinger Bands)                          |       | |
+| BB (Bollinger Bands)                          |   ✔  | |
 
 ## Kullanım
 
@@ -102,6 +102,16 @@ using TeknikAnaliz.NET;
 
 var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
 var result = TAHelper.RSI(closePrices, 14);
+```
+
+**6. BB (Bollinger Bands):**
+RSI metodu, TradingView'in `ta.bb()` fonksiyonu ile aynı sonuçları verir.
+
+```csharp
+using TeknikAnaliz.NET;
+
+var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
+var result = TAHelper.BB(closePrices, 5, 4);
 ```
 
 ### Lisans 
