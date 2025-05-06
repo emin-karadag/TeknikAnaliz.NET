@@ -327,5 +327,56 @@
         }
 
         #endregion
+
+        #region BB (Bollinger Bands)
+
+        /// <summary>
+        /// Bollinger Bantları (Bollinger Bands) hesaplar.
+        /// TradingView'in ta.bb() fonksiyonu ile aynı sonuçları verir.
+        /// </summary>
+        /// <param name="source">Kaynak fiyat dizisi</param>
+        /// <param name="length">Periyot uzunluğu</param>
+        /// <param name="mult">Standart sapma çarpanı</param>
+        /// <returns>Bollinger Bantları değerlerini içeren tuple (middle, upper, lower)</returns>
+        public static (double[] middle, double[] upper, double[] lower) BB(double[] source, int length, double mult)
+        {
+            if (source == null || source.Length == 0)
+                return (Array.Empty<double>(), Array.Empty<double>(), Array.Empty<double>());
+
+            if (length <= 0)
+                throw new ArgumentException("Periyot uzunluğu pozitif bir sayı olmalıdır.", nameof(length));
+
+            if (mult <= 0)
+                throw new ArgumentException("Standart sapma çarpanı pozitif bir sayı olmalıdır.", nameof(mult));
+
+            // Orta bant (SMA)
+            double[] middle = SMA(source, length);
+
+            // Standart sapma
+            double[] stdev = STDEV(source, length);
+
+            // Üst ve alt bantlar
+            double[] upper = new double[source.Length];
+            double[] lower = new double[source.Length];
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                if (double.IsNaN(middle[i]) || double.IsNaN(stdev[i]))
+                {
+                    upper[i] = double.NaN;
+                    lower[i] = double.NaN;
+                }
+                else
+                {
+                    double dev = mult * stdev[i];
+                    upper[i] = middle[i] + dev;
+                    lower[i] = middle[i] - dev;
+                }
+            }
+
+            return (middle, upper, lower);
+        }
+
+        #endregion
     }
 }
