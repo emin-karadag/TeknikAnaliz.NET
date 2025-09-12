@@ -378,5 +378,88 @@
         }
 
         #endregion
+
+        #region ATR (Average True Range)
+
+        /// <summary>
+        /// Average True Range (ATR) hesaplar.
+        /// TradingView'in ta.atr() fonksiyonu ile aynı sonuçları verir.
+        /// </summary>
+        /// <param name="high">Yüksek fiyat dizisi</param>
+        /// <param name="low">Düşük fiyat dizisi</param>
+        /// <param name="close">Kapanış fiyat dizisi</param>
+        /// <param name="length">Periyot uzunluğu</param>
+        /// <returns>ATR değerlerini içeren dizi</returns>
+        public static double[] ATR(double[] high, double[] low, double[] close, int length)
+        {
+            if (high == null || low == null || close == null)
+                throw new ArgumentNullException("High, low ve close dizileri null olamaz.");
+
+            if (high.Length != low.Length || low.Length != close.Length)
+                throw new ArgumentException("High, low ve close dizileri aynı uzunlukta olmalıdır.");
+
+            if (high.Length == 0)
+                return [];
+
+            if (length <= 0)
+                throw new ArgumentException("Periyot uzunluğu pozitif bir sayı olmalıdır.", nameof(length));
+
+            // True Range hesaplama
+            double[] trueRange = TrueRange(high, low, close);
+
+            // True Range'in RMA'sını hesapla (ATR)
+            return RMA(trueRange, length);
+        }
+
+        /// <summary>
+        /// True Range hesaplar.
+        /// TradingView'in ta.tr() fonksiyonu ile aynı sonuçları verir.
+        /// </summary>
+        /// <param name="high">Yüksek fiyat dizisi</param>
+        /// <param name="low">Düşük fiyat dizisi</param>
+        /// <param name="close">Kapanış fiyat dizisi</param>
+        /// <returns>True Range değerlerini içeren dizi</returns>
+        public static double[] TrueRange(double[] high, double[] low, double[] close)
+        {
+            if (high == null || low == null || close == null)
+                throw new ArgumentNullException("High, low ve close dizileri null olamaz.");
+
+            if (high.Length != low.Length || low.Length != close.Length)
+                throw new ArgumentException("High, low ve close dizileri aynı uzunlukta olmalıdır.");
+
+            if (high.Length == 0)
+                return [];
+
+            double[] result = new double[high.Length];
+
+            for (int i = 0; i < high.Length; i++)
+            {
+                // NaN kontrolü
+                if (double.IsNaN(high[i]) || double.IsNaN(low[i]) || double.IsNaN(close[i]))
+                {
+                    result[i] = double.NaN;
+                    continue;
+                }
+
+                // İlk bar için veya önceki kapanış NaN ise: true range = high - low
+                if (i == 0 || double.IsNaN(close[i - 1]))
+                {
+                    result[i] = high[i] - low[i];
+                }
+                else
+                {
+                    // True Range = max(high - low, abs(high - close[1]), abs(low - close[1]))
+                    double range1 = high[i] - low[i];
+                    double range2 = Math.Abs(high[i] - close[i - 1]);
+                    double range3 = Math.Abs(low[i] - close[i - 1]);
+
+                    result[i] = Math.Max(range1, Math.Max(range2, range3));
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }

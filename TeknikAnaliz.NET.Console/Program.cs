@@ -13,6 +13,8 @@ try
     if (klinesResult.Success && (klinesResult.Data?.Any() ?? false))
     {
         var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
+        var highPrices = klinesResult.Data.Select(p => (double)p.HighPrice).ToArray();
+        var lowPrices = klinesResult.Data.Select(p => (double)p.LowPrice).ToArray();
 
         var emaResult = TAHelper.EMA(closePrices, 9);
         var smaResult = TAHelper.SMA(closePrices, 9);
@@ -20,13 +22,15 @@ try
         var stDevResult = TAHelper.STDEV(closePrices, 5);
         var rsiResult = TAHelper.RSI(closePrices, 14);
         var bbResult = TAHelper.BB(closePrices, 5, 4);
+        var atrResult = TAHelper.ATR(highPrices, lowPrices, closePrices, 14);
 
         Console.WriteLine($"EMA => {emaResult.Last():F3} USDT");
         Console.WriteLine($"SMA => {smaResult.Last():F3} USDT");
         Console.WriteLine($"RMA => {rmaResult.Last():F3} USDT");
         Console.WriteLine($"STDEV => {stDevResult.Last():F3} USDT");
-        Console.WriteLine($"RSI => {rsiResult.Last():F3} USDT");
+        Console.WriteLine($"RSI => {rsiResult.Last():F3}");
         Console.WriteLine($"BB => {bbResult.middle.Last():F3} USDT");
+        Console.WriteLine($"ATR => {atrResult.Last():F3} USDT");
     }
 }
 catch (Exception ex)
