@@ -11,10 +11,10 @@
     <PackageProjectUrl>https://github.com/emin-karadag/TeknikAnaliz.NET</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/emin-karadag/TeknikAnaliz.NET</RepositoryUrl>
-    <PackageTags>teknik analiz, technical analysis, rsi, ema, sma, rma, bollinger band</PackageTags>
+    <PackageTags>teknik analiz, technical analysis, rsi, ema, sma, rma, bollinger band, atr</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
-    <PackageReleaseNotes>- BB (Bollinger Bands) eklendi.</PackageReleaseNotes>
-    <Version>1.0.5</Version>
+    <PackageReleaseNotes>- ATR (Average True Range) eklendi.</PackageReleaseNotes>
+    <Version>1.0.6</Version>
   </PropertyGroup>
 
   <ItemGroup>

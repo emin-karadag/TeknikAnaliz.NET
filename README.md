@@ -36,7 +36,8 @@ dotnet add package TeknikAnaliz.NET --version 1.0.5
 | RMA (Relative Moving Average)                 |   ✔  |
 | STDEV (Standard Deviation)                    |   ✔  |
 | RSI (Relative Strength Index)                 |   ✔  |
-| BB (Bollinger Bands)                          |   ✔  | |
+| BB (Bollinger Bands)                          |   ✔  |
+| ATR (Average True Range)                      |   ✔  |
 
 ## Kullanım
 
@@ -105,13 +106,25 @@ var result = TAHelper.RSI(closePrices, 14);
 ```
 
 **6. BB (Bollinger Bands):**
-RSI metodu, TradingView'in `ta.bb()` fonksiyonu ile aynı sonuçları verir.
+BB metodu, TradingView'in `ta.bb()` fonksiyonu ile aynı sonuçları verir.
 
 ```csharp
 using TeknikAnaliz.NET;
 
 var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
 var result = TAHelper.BB(closePrices, 5, 4);
+```
+
+**7. ATR (Average True Range):**
+ATR metodu, TradingView'in `ta.atr()` fonksiyonu ile aynı sonuçları verir.
+
+```csharp
+using TeknikAnaliz.NET;
+
+var highPrices = klinesResult.Data.Select(p => (double)p.HighPrice).ToArray();
+var lowPrices = klinesResult.Data.Select(p => (double)p.LowPrice).ToArray();
+var closePrices = klinesResult.Data.Select(p => (double)p.ClosePrice).ToArray();
+var result = TAHelper.ATR(highPrices, lowPrices, closePrices, 14);
 ```
 
 ### Lisans 
