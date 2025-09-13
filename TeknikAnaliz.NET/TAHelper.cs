@@ -83,31 +83,31 @@
 
             double[] result = new double[source.Length];
 
-            // Kayan pencere yaklaşımı ile SMA hesapla
-            double sum = 0.0;
-            int count = 0;
-
             for (int i = 0; i < source.Length; i++)
             {
-                // Yeni değeri ekle
-                if (!double.IsNaN(source[i]))
+                // Yeterli veri yoksa NaN döndür
+                if (i < length - 1)
                 {
-                    sum += source[i];
-                    count++;
-                }
-
-                // Eğer length değerinden fazla değerimiz varsa eski değeri çıkar
-                if (i >= length && !double.IsNaN(source[i - length]))
-                {
-                    sum -= source[i - length];
-                    count--;
-                }
-
-                // Yeterli veri varsa SMA hesapla
-                if (i >= length - 1)
-                    result[i] = count > 0 ? sum / count : double.NaN;
-                else
                     result[i] = double.NaN;
+                    continue;
+                }
+
+                // Son 'length' kadar değeri kontrol et
+                double sum = 0.0;
+                bool hasNaN = false;
+                
+                for (int j = i - length + 1; j <= i; j++)
+                {
+                    if (double.IsNaN(source[j]))
+                    {
+                        hasNaN = true;
+                        break;
+                    }
+                    sum += source[j];
+                }
+
+                // Herhangi bir NaN varsa sonuç NaN
+                result[i] = hasNaN ? double.NaN : sum / length;
             }
 
             return result;
@@ -203,7 +203,6 @@
             double[] sma = SMA(source, length);
             double[] result = new double[source.Length];
 
-            // Her bir indeks için standart sapma hesapla
             for (int i = 0; i < source.Length; i++)
             {
                 // Eğer yeterli veri yoksa veya SMA değeri NaN ise NaN döndür
@@ -214,36 +213,39 @@
                 }
 
                 double sumOfSquareDeviations = 0.0;
-                int validCount = 0;
+                bool hasNaN = false;
 
+                // Son 'length' kadar değeri kontrol et
                 for (int j = 0; j < length; j++)
                 {
-                    int sourceIndex = i - j;
-                    if (sourceIndex >= 0 && !double.IsNaN(source[sourceIndex]))
+                    int sourceIndex = i - length + 1 + j;
+                    if (sourceIndex >= 0)
                     {
+                        if (double.IsNaN(source[sourceIndex]))
+                        {
+                            hasNaN = true;
+                            break;
+                        }
+                        
                         double deviation = source[sourceIndex] - sma[i];
-                        // Çok küçük değerler için sıfır kabul et
+                        // (çok küçük değerler için sıfır)
                         if (Math.Abs(deviation) <= 1e-10)
                             deviation = 0;
 
                         sumOfSquareDeviations += deviation * deviation;
-                        validCount++;
                     }
                 }
 
-                // Eğer hiç geçerli değer yoksa NaN döndür
-                if (validCount == 0)
+                // Herhangi bir NaN varsa sonuç NaN
+                if (hasNaN)
                 {
                     result[i] = double.NaN;
                 }
                 else
                 {
-                    // biased parametresine göre hesapla
-                    // true: tüm popülasyonun taraflı tahmini (n)
-                    // false: bir örneğin tarafsız tahmini (n-1)
-                    double divisor = biased ? validCount : (validCount - 1);
-
-                    // n-1 = 0 olabilir, bu durumda NaN döndür
+                    // Varsayılan olarak biased (length ile böler)
+                    double divisor = biased ? length : (length - 1);
+                    
                     if (divisor <= 0)
                     {
                         result[i] = double.NaN;
