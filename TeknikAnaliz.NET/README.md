@@ -2,22 +2,22 @@
 
 # TeknikAnaliz.NET
 
-**Finansal dünyayı C# ile daha da yakından analiz etmek için TeknikAnaliz.NET'i keşfedin!** 🚀
+**Finansal dünyayı C# ile daha yakından analiz etmek için TeknikAnaliz.NET'i keşfedin!** 🚀
 
 TeknikAnaliz.NET, finansal piyasalarda teknik analiz yapmak için tasarlanmış güçlü ve kullanımı kolay bir C# kütüphanesidir. Bu kütüphane, yaygın olarak kullanılan teknik indikatörlerin (RSI, EMA, Bollinger Bantları vb.) TradingView'in Pine Script programlama dilindeki hesaplamalarına uygun şekilde C#'a uyarlanmış halini sunar.
 
 ## Kurulum
 
-NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.5
+NuGet Package Manager üzerinden paketi yükleyebilirsiniz: https://www.nuget.org/packages/TeknikAnaliz.NET/1.0.6.1
 
 **NuGet PM**
 ```
-Install-Package TeknikAnaliz.NET -Version 1.0.5
+Install-Package TeknikAnaliz.NET -Version 1.0.6.1
 ```
 
 **dotnet cli**
 ```
-dotnet add package TeknikAnaliz.NET --version 1.0.5
+dotnet add package TeknikAnaliz.NET --version 1.0.6.1
 ```
 
 ### Neden TeknikAnaliz.NET?
